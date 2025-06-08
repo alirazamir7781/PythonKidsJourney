@@ -290,7 +290,7 @@ else:
                         <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 font-mono text-sm">
                           <div className="text-gray-200"># Ask the user their age</div>
                           <div>age = int(input("How old are you? "))</div>
-                          <div>if age >= 8:</div>
+                          <div>if age {'>'}= 8:</div>
                           <div className="ml-4">print("You can ride! 🎢")</div>
                         </div>
                       </CardContent>

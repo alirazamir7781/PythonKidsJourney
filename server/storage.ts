@@ -187,6 +187,11 @@ export class MemStorage implements IStorage {
     const student: Student = {
       ...insertStudent,
       id: this.currentStudentId++,
+      currentWeek: insertStudent.currentWeek ?? 1,
+      totalPoints: insertStudent.totalPoints ?? 0,
+      streakDays: insertStudent.streakDays ?? 0,
+      level: insertStudent.level ?? 1,
+      achievements: insertStudent.achievements as string[] ?? [],
       createdAt: new Date(),
     };
     this.students.set(student.id, student);
@@ -215,6 +220,7 @@ export class MemStorage implements IStorage {
     const course: Course = {
       ...insertCourse,
       id: this.currentCourseId++,
+      isLocked: insertCourse.isLocked ?? false,
     };
     this.courses.set(course.id, course);
     return course;
@@ -235,6 +241,9 @@ export class MemStorage implements IStorage {
     const lesson: Lesson = {
       ...insertLesson,
       id: this.currentLessonId++,
+      sampleCode: insertLesson.sampleCode ?? null,
+      expectedOutput: insertLesson.expectedOutput ?? null,
+      points: insertLesson.points ?? 50,
     };
     this.lessons.set(lesson.id, lesson);
     return lesson;
@@ -254,6 +263,9 @@ export class MemStorage implements IStorage {
     const progress: Progress = {
       ...insertProgress,
       id: this.currentProgressId++,
+      lessonId: insertProgress.lessonId ?? null,
+      completed: insertProgress.completed ?? false,
+      codeSubmitted: insertProgress.codeSubmitted ?? null,
       completedAt: insertProgress.completed ? new Date() : null,
     };
     this.progressRecords.set(progress.id, progress);
@@ -286,6 +298,9 @@ export class MemStorage implements IStorage {
     const challenge: Challenge = {
       ...insertChallenge,
       id: this.currentChallengeId++,
+      sampleCode: insertChallenge.sampleCode ?? null,
+      solution: insertChallenge.solution ?? null,
+      isDaily: insertChallenge.isDaily ?? false,
     };
     this.challenges.set(challenge.id, challenge);
     return challenge;

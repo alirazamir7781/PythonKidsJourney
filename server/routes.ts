@@ -188,7 +188,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         if (code.includes('print(')) {
           const printMatches = code.match(/print\(([^)]+)\)/g);
           if (printMatches) {
-            output = printMatches.map(match => {
+            output = printMatches.map((match: string) => {
               const content = match.replace(/print\(|\)/g, '').replace(/['"]/g, '');
               return content;
             }).join('\n');
