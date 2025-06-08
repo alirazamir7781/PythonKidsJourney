@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Open+Sans:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+
+  /* Kid-friendly color palette */
+  --coral: hsl(0, 71%, 69%);
+  --turquoise: hsl(176, 52%, 58%);
+  --skyblue: hsl(201, 61%, 57%);
+  --mint: hsl(145, 36%, 67%);
+  --sunny: hsl(43, 89%, 64%);
+  --pink: hsl(300, 89%, 81%);
+  --orange: hsl(25, 93%, 62%);
+  --darkblue: hsl(217, 33%, 22%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, hsl(220, 100%, 96%) 0%, hsl(280, 100%, 98%) 50%, hsl(340, 100%, 98%) 100%);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fredoka One', cursive;
+  }
+
+  code, pre {
+    font-family: 'Fira Code', monospace;
+  }
+}
+
+@layer components {
+  .gradient-coral {
+    background: linear-gradient(135deg, var(--coral) 0%, var(--orange) 100%);
+  }
+
+  .gradient-turquoise {
+    background: linear-gradient(135deg, var(--turquoise) 0%, var(--skyblue) 100%);
+  }
+
+  .gradient-mint {
+    background: linear-gradient(135deg, var(--mint) 0%, var(--turquoise) 100%);
+  }
+
+  .gradient-sunny {
+    background: linear-gradient(135deg, var(--sunny) 0%, var(--orange) 100%);
+  }
+
+  .gradient-pink {
+    background: linear-gradient(135deg, var(--pink) 0%, var(--coral) 100%);
+  }
+
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .achievement-glow {
+    box-shadow: 0 0 20px rgba(254, 202, 87, 0.5);
+  }
+
+  .bounce-gentle {
+    animation: bounce 2s infinite;
+  }
+
+  .pulse-slow {
+    animation: pulse 3s infinite;
+  }
+
+  .wiggle {
+    animation: wiggle 1s ease-in-out infinite;
+  }
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  .code-editor {
+    background: hsl(217, 33%, 15%);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .progress-bar {
+    background: linear-gradient(90deg, var(--turquoise) 0%, var(--skyblue) 100%);
+    border-radius: 10px;
+    height: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .lesson-card {
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(220, 20%, 98%) 100%);
+  }
+
+  .lesson-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .week-timeline {
+    background: linear-gradient(135deg, var(--turquoise) 0%, var(--skyblue) 100%);
+  }
+}
+
+/* Monaco Editor custom styling */
+.monaco-editor {
+  border-radius: 8px !important;
+}
+
+.monaco-editor .margin {
+  background-color: hsl(217, 33%, 12%) !important;
+}
+
+.monaco-editor .view-lines {
+  font-family: 'Fira Code', monospace !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(220, 20%, 95%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--turquoise), var(--skyblue));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--coral), var(--orange));
+}
