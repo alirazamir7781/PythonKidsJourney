@@ -307,7 +307,7 @@ else:
                               <li>• <code>print("text")</code> - Show text</li>
                               <li>• <code>name = "Alex"</code> - Store text</li>
                               <li>• <code>age = 10</code> - Store numbers</li>
-                              <li>• <code>if age > 8:</code> - Make decisions</li>
+                              <li>• <code>if age {'>'} 8:</code> - Make decisions</li>
                             </ul>
                           </CardContent>
                         </Card>
