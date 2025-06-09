@@ -3,6 +3,8 @@ import {
   type Student, type Course, type Lesson, type Progress, type Challenge, type Achievement,
   type InsertStudent, type InsertCourse, type InsertLesson, type InsertProgress, type InsertChallenge, type InsertAchievement 
 } from "@shared/schema";
+import { db } from "./db";
+import { eq, and } from "drizzle-orm";
 
 export interface IStorage {
   // Student operations
@@ -329,4 +331,124 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  async getStudent(id: number): Promise<Student | undefined> {
+    const [student] = await db.select().from(students).where(eq(students.id, id));
+    return student || undefined;
+  }
+
+  async getStudentByUsername(username: string): Promise<Student | undefined> {
+    const [student] = await db.select().from(students).where(eq(students.username, username));
+    return student || undefined;
+  }
+
+  async createStudent(insertStudent: InsertStudent): Promise<Student> {
+    const [student] = await db
+      .insert(students)
+      .values(insertStudent)
+      .returning();
+    return student;
+  }
+
+  async updateStudent(id: number, updates: Partial<Student>): Promise<Student> {
+    const [student] = await db
+      .update(students)
+      .set(updates)
+      .where(eq(students.id, id))
+      .returning();
+    return student;
+  }
+
+  async getAllCourses(): Promise<Course[]> {
+    return await db.select().from(courses).orderBy(courses.weekNumber);
+  }
+
+  async getCourse(id: number): Promise<Course | undefined> {
+    const [course] = await db.select().from(courses).where(eq(courses.id, id));
+    return course || undefined;
+  }
+
+  async createCourse(insertCourse: InsertCourse): Promise<Course> {
+    const [course] = await db
+      .insert(courses)
+      .values(insertCourse)
+      .returning();
+    return course;
+  }
+
+  async getLessonsByCourse(courseId: number): Promise<Lesson[]> {
+    return await db.select().from(lessons)
+      .where(eq(lessons.courseId, courseId))
+      .orderBy(lessons.lessonNumber);
+  }
+
+  async getLesson(id: number): Promise<Lesson | undefined> {
+    const [lesson] = await db.select().from(lessons).where(eq(lessons.id, id));
+    return lesson || undefined;
+  }
+
+  async createLesson(insertLesson: InsertLesson): Promise<Lesson> {
+    const [lesson] = await db
+      .insert(lessons)
+      .values(insertLesson)
+      .returning();
+    return lesson;
+  }
+
+  async getStudentProgress(studentId: number): Promise<Progress[]> {
+    return await db.select().from(progress).where(eq(progress.studentId, studentId));
+  }
+
+  async getStudentCourseProgress(studentId: number, courseId: number): Promise<Progress[]> {
+    return await db.select().from(progress)
+      .where(and(eq(progress.studentId, studentId), eq(progress.courseId, courseId)));
+  }
+
+  async createProgress(insertProgress: InsertProgress): Promise<Progress> {
+    const [progressRecord] = await db
+      .insert(progress)
+      .values(insertProgress)
+      .returning();
+    return progressRecord;
+  }
+
+  async updateProgress(id: number, updates: Partial<Progress>): Promise<Progress> {
+    const [progressRecord] = await db
+      .update(progress)
+      .set(updates)
+      .where(eq(progress.id, id))
+      .returning();
+    return progressRecord;
+  }
+
+  async getAllChallenges(): Promise<Challenge[]> {
+    return await db.select().from(challenges);
+  }
+
+  async getDailyChallenge(): Promise<Challenge | undefined> {
+    const [challenge] = await db.select().from(challenges).where(eq(challenges.isDaily, true));
+    return challenge || undefined;
+  }
+
+  async createChallenge(insertChallenge: InsertChallenge): Promise<Challenge> {
+    const [challenge] = await db
+      .insert(challenges)
+      .values(insertChallenge)
+      .returning();
+    return challenge;
+  }
+
+  async getAllAchievements(): Promise<Achievement[]> {
+    return await db.select().from(achievements);
+  }
+
+  async createAchievement(insertAchievement: InsertAchievement): Promise<Achievement> {
+    const [achievement] = await db
+      .insert(achievements)
+      .values(insertAchievement)
+      .returning();
+    return achievement;
+  }
+}
+
+export const storage = new DatabaseStorage();
